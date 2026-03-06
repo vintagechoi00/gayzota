@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAYZOTA BY ME</title>
+    <title>GAYZOTA ULTIMATE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: sans-serif; background-color: #f5f3ff; }
@@ -18,7 +18,7 @@
 <body class="min-h-screen flex flex-col">
 
     <nav id="navbar" class="hidden bg-white shadow-sm p-4 flex justify-between items-center px-6 border-b">
-        <div class="font-bold azota-purple text-lg italic underline uppercase">GAYZOTA BY ME</div>
+        <div class="font-bold azota-purple text-lg italic underline uppercase">GAYZOTA ULTIMATE</div>
         <button onclick="location.reload()" class="bg-red-50 text-red-500 text-xs font-bold px-4 py-2 rounded-xl">THOÁT</button>
     </nav>
 
@@ -33,27 +33,25 @@
             </div>
         </div>
 
-        <!-- MENU -->
+        <!-- MENU CHÍNH -->
         <div id="mainMenu" class="glass-card p-8 w-full max-w-2xl hidden mt-6">
             <h2 class="text-xl font-bold mb-6 azota-purple border-b pb-2 text-center uppercase">Bảng Điều Khiển</h2>
             <div class="grid grid-cols-1 gap-4">
-                <button id="adminOnlyBtn" onclick="showSection('adminPage')" class="hidden p-5 border-2 border-violet-100 rounded-2xl hover:bg-violet-50 text-left font-bold italic text-violet-600">📝 Quản lý đề thi (Admin)</button>
+                <button id="adminOnlyBtn" onclick="showSection('adminPage')" class="hidden p-5 border-2 border-violet-100 rounded-2xl hover:bg-violet-50 text-left font-bold italic text-violet-600">📝 Quản lý đề (PC Only)</button>
                 <button onclick="showSection('selectExamPage')" class="p-5 border-2 border-violet-100 rounded-2xl hover:bg-violet-50 text-left font-bold uppercase text-gray-700">✍️ Vào thi</button>
-                <button onclick="showSection('resultBoard')" class="p-5 border-2 border-violet-100 rounded-2xl hover:bg-violet-50 text-left font-bold uppercase text-gray-700">📊 Xem lịch sử làm bài</button>
+                <button onclick="showSection('resultBoard')" class="p-5 border-2 border-violet-100 rounded-2xl hover:bg-violet-50 text-left font-bold uppercase text-gray-700">📊 Lịch sử & GPS</button>
             </div>
         </div>
 
-        <!-- TRANG QUẢN LÝ -->
+        <!-- QUẢN LÝ ĐỀ (Giao diện phụ để copy code) -->
         <div id="adminPage" class="glass-card p-8 w-full max-w-4xl hidden mt-4">
             <button onclick="showSection('mainMenu')" class="mb-4 text-violet-600 font-bold text-sm underline">← Quay lại Menu</button>
-            <h3 class="font-bold mb-2 text-gray-600 uppercase">Hướng dẫn cập nhật đề</h3>
-            <div class="bg-yellow-50 p-4 rounded-xl text-sm text-yellow-800 mb-4 italic">
-                Vì đã xóa Google Script, dữ liệu sẽ chỉ lưu trên trình duyệt này. Để mọi người đều thấy đề, bạn hãy copy nội dung soạn thảo và dán vào phần <b>sampleExams</b> trong code GitHub.
-            </div>
-            <textarea id="rawInput" class="w-full h-48 p-3 rounded-xl border mb-4 focus:ring-2 focus:ring-violet-200 outline-none" placeholder="Câu 1. Nội dung... A. ĐA1 B. ĐA2 @t"></textarea>
+            <h3 class="font-bold mb-2 text-gray-600 uppercase">Hướng dẫn hiện đề lên điện thoại</h3>
+            <p class="text-sm text-red-500 mb-4 font-medium italic">BƯỚC 1: Soạn đề dưới đây. BƯỚC 2: Copy đề. BƯỚC 3: Dán vào GitHub chỗ 'sampleExams'.</p>
+            <textarea id="rawInput" class="w-full h-48 p-3 rounded-xl border mb-4 focus:ring-2 focus:ring-violet-200 outline-none" placeholder="Câu 1. 1+1 bằng? A. 1 B. 2 @t"></textarea>
         </div>
 
-        <!-- LỌC ĐỀ -->
+        <!-- CHỌN ĐỀ -->
         <div id="selectExamPage" class="glass-card p-8 w-full max-w-2xl hidden mt-4">
              <button onclick="showSection('mainMenu')" class="mb-4 text-violet-600 font-bold text-sm underline">← Quay lại</button>
              <div id="userExamList" class="grid grid-cols-1 gap-4"></div>
@@ -74,53 +72,60 @@
         <div id="resultPage" class="glass-card p-10 text-center hidden mt-10 w-full max-w-md">
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Kết quả của bạn</h2>
             <div class="text-8xl font-black azota-purple mb-4" id="finalScore">0</div>
-            <div class="mb-6"><p class="text-xl font-bold text-gray-700" id="statCorrect">Đúng: 0/0 câu</p></div>
-            <button onclick="showReview()" class="w-full bg-[#f3e8ff] text-violet-700 font-bold py-4 rounded-2xl mb-4">XEM CHI TIẾT</button>
-            <button onclick="showSection('mainMenu')" class="w-full bg-azota text-white font-bold py-4 rounded-2xl">VỀ MENU CHÍNH</button>
+            <p id="gpsNote" class="text-xs text-gray-400 mb-6 italic">Đang ghi nhận vị trí GPS...</p>
+            <button onclick="showReview()" class="w-full bg-[#f3e8ff] text-violet-700 font-bold py-4 rounded-2xl mb-4">XEM CHI TIẾT ĐÁP ÁN</button>
+            <button onclick="showSection('mainMenu')" class="w-full bg-azota text-white font-bold py-4 rounded-2xl">QUAY LẠI MENU</button>
         </div>
 
-        <!-- XEM LẠI ĐÁP ÁN -->
-        <div id="reviewPage" class="glass-card p-8 w-full max-w-3xl hidden mt-4">
-            <div id="reviewContainer" class="space-y-6"></div>
-            <button onclick="showSection('resultPage')" class="mt-10 w-full bg-gray-800 text-white py-4 rounded-xl font-bold uppercase">Quay lại</button>
-        </div>
-
-        <!-- BẢNG ĐIỂM CỤC BỘ -->
+        <!-- LỊCH SỬ & GPS -->
         <div id="resultBoard" class="glass-card p-8 w-full max-w-3xl hidden mt-4">
             <button onclick="showSection('mainMenu')" class="mb-4 text-violet-600 font-bold text-sm underline">← Quay lại</button>
-            <h3 class="font-bold mb-4 azota-purple uppercase">Lịch sử làm bài trên máy này</h3>
             <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="text-xs uppercase text-gray-400 border-b">
-                        <tr><th class="p-3">Tên</th><th class="p-3">Đề</th><th class="p-3 text-right">Điểm</th></tr>
+                <table class="w-full text-left text-sm">
+                    <thead class="text-gray-400 border-b uppercase text-xs">
+                        <tr><th class="p-2">Tên</th><th class="p-2">Điểm</th><th class="p-2">GPS</th></tr>
                     </thead>
                     <tbody id="resultTableBody"></tbody>
                 </table>
             </div>
+        </div>
+
+        <!-- XEM LẠI -->
+        <div id="reviewPage" class="glass-card p-8 w-full max-w-3xl hidden mt-4">
+            <div id="reviewContainer" class="space-y-6"></div>
+            <button onclick="showSection('resultPage')" class="mt-10 w-full bg-gray-800 text-white py-4 rounded-xl font-bold">QUAY LẠI</button>
         </div>
     </main>
 
     <script>
         const USERS = { 'mrduc': { pass: 'admin8a7', role: 'admin' }, 'hoanggay': { pass: 'missgay', role: 'user' } };
 
-        // --- DÁN ĐỀ CỦA BẠN VÀO ĐÂY ĐỂ CẢ LỚP THẤY ---
+        // ==========================================
+        // CHỖ NÀY ĐỂ SỬA ĐỀ (DÁN VÀO ĐÂY ĐỂ HIỆN TRÊN ĐT)
+        // ==========================================
         const sampleExams = [
             {
-                id: 1,
-                title: "ĐỀ KIỂM TRA 15P SỐ 1",
+                id: 101,
+                title: "ĐỀ KIỂM TRA TOÁN 15 PHÚT",
                 questions: [
-                    { q: "1 + 1 bằng mấy?", opts: [{text:"2",correct:true}, {text:"3",correct:false}] },
-                    { q: "Hoàng 'Gay' đúng không?", opts: [{text:"Quá đúng",correct:true}, {text:"Sai bét",correct:false}] }
+                    { 
+                        q: "Căn bậc hai của 16 là?", 
+                        opts: [{text:"4",correct:true}, {text:"8",correct:false}, {text:"16",correct:false}] 
+                    },
+                    { 
+                        q: "Hoàng có gay không?", 
+                        opts: [{text:"Có",correct:true}, {text:"Rất gay",correct:true}, {text:"Không",correct:false}] 
+                    }
                 ]
             }
         ];
+        // ==========================================
 
-        let allExams = JSON.parse(localStorage.getItem('allExams')) || sampleExams;
         let history = JSON.parse(localStorage.getItem('quizHistory')) || [];
-        let state = { user: '', role: '', currentExam: null, idx: 0, correctCount: 0, userAnswers: [], shuffledOptions: [], timer: null, timeLeft: 900 };
+        let state = { user: '', currentExam: null, idx: 0, correctCount: 0, userAnswers: [], shuffledOptions: [], timer: null, timeLeft: 900, latLon: "Chưa lấy" };
 
         function showSection(id) {
-            ['loginPage', 'mainMenu', 'adminPage', 'selectExamPage', 'examPage', 'resultPage', 'reviewPage', 'resultBoard'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            ['loginPage', 'mainMenu', 'adminPage', 'selectExamPage', 'examPage', 'resultPage', 'resultBoard', 'reviewPage'].forEach(s => document.getElementById(s).classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
             if(id === 'selectExamPage') renderUserExams();
             if(id === 'resultBoard') showResultBoardContent();
@@ -130,16 +135,22 @@
             const u = document.getElementById('username').value.trim().toLowerCase();
             const p = document.getElementById('password').value;
             if (USERS[u] && USERS[u].pass === p) {
-                state.user = u; state.role = USERS[u].role;
+                state.user = u;
                 document.getElementById('loginPage').classList.add('hidden');
                 document.getElementById('navbar').classList.remove('hidden');
-                if (state.role === 'admin') document.getElementById('adminOnlyBtn').classList.remove('hidden');
+                if (USERS[u].role === 'admin') document.getElementById('adminOnlyBtn').classList.remove('hidden');
                 showSection('mainMenu');
-            } else { alert("Sai thông tin!"); }
+                // Xin quyền GPS ngay khi vào
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(pos => {
+                        state.latLon = `${pos.coords.latitude.toFixed(4)},${pos.coords.longitude.toFixed(4)}`;
+                    });
+                }
+            } else { alert("Sai tài khoản!"); }
         }
 
         function renderUserExams() {
-            document.getElementById('userExamList').innerHTML = allExams.map(ex => `<button onclick="state.currentExam=allExams.find(e=>e.id==${ex.id});startExam()" class="p-6 border-2 border-violet-100 rounded-3xl font-bold text-violet-700 uppercase active:scale-95 transition-all">${ex.title}</button>`).join('');
+            document.getElementById('userExamList').innerHTML = sampleExams.map(ex => `<button onclick="state.currentExam=sampleExams.find(e=>e.id==${ex.id});startExam()" class="p-6 border-2 border-violet-100 rounded-3xl font-bold text-violet-700 uppercase active:scale-95 transition-all">${ex.title}</button>`).join('');
         }
 
         function startExam() {
@@ -170,8 +181,8 @@
                 b.onclick = () => {
                     if (!document.getElementById('nextBtn').classList.contains('hidden')) return;
                     state.userAnswers.push(i);
-                    if (o.correct) { b.classList.add('bg-green-500', 'text-white', 'border-green-500'); state.correctCount++; }
-                    else b.classList.add('bg-red-500', 'text-white', 'border-red-500');
+                    if (o.correct) { b.classList.add('bg-green-500', 'text-white'); state.correctCount++; }
+                    else b.classList.add('bg-red-500', 'text-white');
                     document.getElementById('nextBtn').classList.remove('hidden');
                 };
                 group.appendChild(b);
@@ -184,26 +195,26 @@
             clearInterval(state.timer);
             const score = Math.round((state.correctCount / state.currentExam.questions.length) * 10 * 100) / 100;
             
-            // Lưu lịch sử vào máy này
-            history.unshift({ examTitle: state.currentExam.title, name: state.user, score });
+            // Lưu vào lịch sử máy
+            history.unshift({ name: state.user, score, gps: state.latLon, exam: state.currentExam.title });
             localStorage.setItem('quizHistory', JSON.stringify(history));
             
             showSection('resultPage');
             document.getElementById('finalScore').innerText = score;
-            document.getElementById('statCorrect').innerText = `Đúng: ${state.correctCount}/${state.currentExam.questions.length} câu`;
+            document.getElementById('gpsNote').innerText = "GPS ghi nhận: " + state.latLon;
         }
 
         function showReview() {
             showSection('reviewPage');
             document.getElementById('reviewContainer').innerHTML = state.currentExam.questions.map((q, i) => {
                 const userIdx = state.userAnswers[i], opts = state.shuffledOptions[i];
-                return `<div class="p-5 border rounded-2xl bg-white"><div class="font-bold mb-3">Câu ${i+1}: ${q.q}</div>
+                return `<div class="p-5 border rounded-2xl bg-white mb-4"><div class="font-bold mb-3">Câu ${i+1}: ${q.q}</div>
                     ${opts.map((o, oi) => `<div class="review-opt ${oi===userIdx?(o.correct?'review-correct':'review-wrong'):''}">${o.text} ${o.correct ? '✓' : ''}</div>`).join('')}</div>`;
             }).join('');
         }
 
         function showResultBoardContent() {
-            document.getElementById('resultTableBody').innerHTML = history.map(h => `<tr class="border-b"><td class="p-3 text-sm font-medium">${h.name}</td><td class="p-3 text-xs text-gray-500">${h.examTitle}</td><td class="p-3 text-sm font-black text-violet-600 text-right">${h.score}đ</td></tr>`).join('') || '<tr><td colspan="3" class="p-10 text-center text-gray-400 italic">Chưa có ai làm bài trên máy này.</td></tr>';
+            document.getElementById('resultTableBody').innerHTML = history.map(h => `<tr class="border-b"><td class="p-3 font-bold">${h.name}</td><td class="p-3 text-violet-600 font-bold">${h.score}</td><td class="p-3 text-gray-400 text-xs">${h.gps}</td></tr>`).join('') || '<tr><td colspan="3" class="p-10 text-center text-gray-400 italic">Trống</td></tr>';
         }
     </script>
 </body>
