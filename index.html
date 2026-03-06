@@ -151,7 +151,52 @@
 
     <script>
         const USERS = { 'mrduc': 'admin8a7', 'hoanggay': 'missgay' };
-        let exams = JSON.parse(localStorage.getItem('myExams')) || [];
+        
+        // PHẦN ĐỀ ĐỊA LÝ 8 ĐƯỢC THÊM VÀO ĐÂY
+        let defaultExams = [
+            {
+                id: 1715000000000,
+                title: "ĐỊA LÝ 8 - CHƯƠNG ĐẤT VIỆT NAM",
+                questions: [
+                    { q: "Đặc điểm chung của đất Việt Nam là gì?", opts: [{t: "Đất feralit chiếm diện tích lớn nhất", c: true}, {t: "Chủ yếu là đất phù sa", c: false}, {t: "Đất nghèo dinh dưỡng", c: false}, {t: "Chỉ có 2 nhóm đất chính", c: false}] },
+                    { q: "Nhóm đất chiếm diện tích lớn nhất nước ta là?", opts: [{t: "Nhóm đất feralit", c: true}, {t: "Nhóm đất phù sa", c: false}, {t: "Nhóm đất mùn núi cao", c: false}, {t: "Nhóm đất xám", c: false}] },
+                    { q: "Đất feralit hình thành trên loại đá nào cho màu đỏ thẫm đặc trưng?", opts: [{t: "Đá ba-zan", c: true}, {t: "Đá vôi", c: false}, {t: "Đá sét", c: false}, {t: "Đá biến chất", c: false}] },
+                    { q: "Quá trình hình thành đất đặc trưng ở vùng khí hậu nhiệt đới ẩm là?", opts: [{t: "Quá trình feralit", c: true}, {t: "Quá trình bồi tụ", c: false}, {t: "Quá trình xói mòn", c: false}, {t: "Quá trình phong hóa lý học", c: false}] },
+                    { q: "Đất feralit có đặc tính gì?", opts: [{t: "Chua, nghèo mùn, nhiều sét", c: true}, {t: "Tơi xốp, giàu chất dinh dưỡng", c: false}, {t: "Rất kiềm", c: false}, {t: "Không có oxit sắt, nhôm", c: false}] },
+                    { q: "Nhóm đất phù sa chiếm khoảng bao nhiêu % diện tích đất tự nhiên?", opts: [{t: "24%", c: true}, {t: "65%", c: false}, {t: "11%", c: false}, {t: "50%", c: false}] },
+                    { q: "Đất phù sa sông Hồng có đặc điểm gì nổi bật?", opts: [{t: "Không được bồi đắp hằng năm (trong đê)", c: true}, {t: "Được bồi đắp hằng năm thường xuyên", c: false}, {t: "Nhiều cát ven biển", c: false}, {t: "Chủ yếu là đất phèn", c: false}] },
+                    { q: "Đất phù sa sông Cửu Long có đặc điểm gì?", opts: [{t: "Diện tích đất phèn, đất mặn lớn", c: true}, {t: "Tầng đất mỏng", c: false}, {t: "Bị bạc màu nghiêm trọng", c: false}, {t: "Chủ yếu là đất mùn", c: false}] },
+                    { q: "Nhóm đất mùn núi cao hình thành ở độ cao từ?", opts: [{t: "1600m trở lên", c: true}, {t: "600m trở xuống", c: false}, {t: "1000m trở lên", c: false}, {t: "2000m trở lên", c: false}] },
+                    { q: "Sử dụng đất ở nước ta cần chú ý vấn đề gì nhất?", opts: [{t: "Chống xói mòn và ô nhiễm đất", c: true}, {t: "Mở rộng diện tích đất hoang", c: false}, {t: "Bỏ hoang đất đồi núi", c: false}, {t: "Chỉ trồng cây lương thực", c: false}] },
+                    { q: "Đất feralit thích hợp nhất để trồng loại cây nào?", opts: [{t: "Cây công nghiệp lâu năm", c: true}, {t: "Lúa nước", c: false}, {t: "Cây hoa màu ngắn ngày", c: false}, {t: "Rừng ngập mặn", c: false}] },
+                    { q: "Đất phù sa thích hợp nhất để trồng cây gì?", opts: [{t: "Lúa nước và cây ngắn ngày", c: true}, {t: "Cà phê, cao su", c: false}, {t: "Chè, quế", c: false}, {t: "Cây gỗ lớn", c: false}] },
+                    { q: "Nguyên nhân chính gây ô nhiễm đất là?", opts: [{t: "Sử dụng quá nhiều phân bón hóa học, thuốc trừ sâu", c: true}, {t: "Trồng rừng", c: false}, {t: "Canh tác lúa nước", c: false}, {t: "Thủy lợi hóa", c: false}] },
+                    { q: "Đất mặn tập trung nhiều nhất ở đâu?", opts: [{t: "Ven biển miền Tây Nam Bộ", c: true}, {t: "Trung du miền núi phía Bắc", c: false}, {t: "Tây Nguyên", c: false}, {t: "Vùng nội địa", c: false}] },
+                    { q: "Đất phèn có đặc tính hóa học là?", opts: [{t: "Rất chua", c: true}, {t: "Rất kiềm", c: false}, {t: "Trung tính", c: false}, {t: "Ngọt", c: false}] },
+                    { q: "Tại sao đất đồi núi dễ bị xói mòn?", opts: [{t: "Độ dốc lớn và mất lớp phủ thực vật", c: true}, {t: "Do con người bón phân", c: false}, {t: "Do mưa quá ít", c: false}, {t: "Do đất quá cứng", c: false}] },
+                    { q: "Biện pháp bảo vệ đất đồi núi hữu hiệu nhất là?", opts: [{t: "Làm ruộng bậc thang và trồng rừng", c: true}, {t: "Đào ao nuôi cá", c: false}, {t: "Xây dựng nhà cao tầng", c: false}, {t: "Phát quang bụi rậm", c: false}] },
+                    { q: "Nhóm đất feralit có màu đỏ vàng do có sự tích tụ của?", opts: [{t: "Oxit sắt và oxit nhôm", c: true}, {t: "Canxi", c: false}, {t: "Kali", c: false}, {t: "Natri", c: false}] },
+                    { q: "Đất xám bạc màu thường phân bố ở?", opts: [{t: "Vùng chuyển tiếp giữa đồng bằng và miền núi", c: true}, {t: "Đỉnh núi cao", c: false}, {t: "Dưới lòng sông", c: false}, {t: "Các bãi bồi ven biển", c: false}] },
+                    { q: "Sự suy giảm diện tích đất trồng lúa hiện nay chủ yếu do?", opts: [{t: "Chuyển sang đất thổ cư và công nghiệp", c: true}, {t: "Đất bị biến mất", c: false}, {t: "Do bão lũ tiêu hủy", c: false}, {t: "Do người dân bỏ quê", c: false}] },
+                    { q: "Đất ở đồng bằng ven biển miền Trung thường có đặc điểm?", opts: [{t: "Nhiều cát, nghèo dinh dưỡng", c: true}, {t: "Rất màu mỡ", c: false}, {t: "Chủ yếu là đất đen Ba-zan", c: false}, {t: "Đất mùn dày", c: false}] },
+                    { q: "Đất feralit hình thành trên đá vôi phân bố nhiều ở?", opts: [{t: "Vùng núi Đông Bắc", c: true}, {t: "Đông Nam Bộ", c: false}, {t: "Tây Nguyên", c: false}, {t: "Đồng bằng sông Cửu Long", c: false}] },
+                    { q: "Tác hại của việc đất bị thoái hóa là gì?", opts: [{t: "Năng suất cây trồng giảm", c: true}, {t: "Cây trồng phát triển nhanh hơn", c: false}, {t: "Đất trở nên quá giàu dinh dưỡng", c: false}, {t: "Tăng khả năng giữ nước", c: false}] },
+                    { q: "Trong các nhóm đất sau, nhóm nào có tầng mùn dày nhất?", opts: [{t: "Đất mùn núi cao", c: true}, {t: "Đất cát", c: false}, {t: "Đất bạc màu", c: false}, {t: "Đất phèn", c: false}] },
+                    { q: "Hoạt động nào giúp cải tạo đất mặn?", opts: [{t: "Thủy lợi và bón vôi", c: true}, {t: "Bón thêm muối", c: false}, {t: "Phun thuốc trừ sâu", c: false}, {t: "Đốt rừng làm nương rẫy", c: false}] },
+                    { q: "Đất trong đê sông Hồng không được bồi đắp vì?", opts: [{t: "Hệ thống đê ngăn lũ", c: true}, {t: "Sông Hồng không còn phù sa", c: false}, {t: "Do mưa ít", c: false}, {t: "Do thủy điện chặn lại", c: false}] },
+                    { q: "Đất rừng ngập mặn thường là?", opts: [{t: "Đất mặn", c: true}, {t: "Đất mùn núi cao", c: false}, {t: "Đất đá vôi", c: false}, {t: "Đất Ba-zan", c: false}] },
+                    { q: "Loại đất nào sau đây không thuộc nhóm đất phù sa?", opts: [{t: "Đất feralit trên đá sét", c: true}, {t: "Đất mặn", c: false}, {t: "Đất phèn", c: false}, {t: "Đất phù sa ngọt", c: false}] },
+                    { q: "Việc bón phân hữu cơ có tác dụng gì cho đất?", opts: [{t: "Tăng độ phì nhiêu và làm tơi xốp đất", c: true}, {t: "Làm đất nhanh bạc màu", c: false}, {t: "Làm chết vi sinh vật có lợi", c: false}, {t: "Làm đất cứng hơn", c: false}] },
+                    { q: "Đất feralit thường có độ pH như thế nào?", opts: [{t: "Thấp (tính axit)", c: true}, {t: "Cao (tính kiềm)", c: false}, {t: "Bằng 7 (trung tính)", c: false}, {t: "Không có độ pH", c: false}] }
+                ]
+            }
+        ];
+
+        let exams = JSON.parse(localStorage.getItem('myExams')) || defaultExams;
+        if (JSON.parse(localStorage.getItem('myExams')) === null) {
+            localStorage.setItem('myExams', JSON.stringify(defaultExams));
+        }
+
         let history = JSON.parse(localStorage.getItem('myHistory')) || [];
         let state = { user: '', exam: null, idx: 0, corrects: 0, timer: null, time: 900, startTime: 0, userAnswers: [] };
 
@@ -236,7 +281,6 @@
                 b.onclick = () => {
                     if(!document.getElementById('nextBtn').classList.contains('hidden')) return;
                     
-                    // LƯU DỮ LIỆU ĐỂ REVIEW MÀU NGUYÊN Ô
                     state.userAnswers.push({ 
                         question: q.q, 
                         selected: o.t, 
@@ -296,10 +340,10 @@
                     let badge = '';
                     
                     if (opt.c) {
-                        statusClass = 'opt-correct'; // Ô màu xanh cho câu ĐÚNG
+                        statusClass = 'opt-correct'; 
                         badge = '<span class="text-[10px] font-black uppercase">✓ Đáp án đúng</span>';
                     } else if (opt.t === ans.selected) {
-                        statusClass = 'opt-wrong'; // Ô màu đỏ cho câu CHỌN SAI
+                        statusClass = 'opt-wrong'; 
                         badge = '<span class="text-[10px] font-black uppercase">✗ Bạn chọn</span>';
                     }
 
